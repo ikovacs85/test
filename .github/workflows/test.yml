@@ -3,13 +3,21 @@ run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: workflow_dispatch
 jobs:
   Explore-GitHub-Actions:
-    #environment: dev
-    runs-on: ubuntu-latest
+    environment: dev
+    runs-on: windows-latest
     steps:
-      - run: |
+      - name: test secrets
+        env: 
+          TENANT_ID: ${{ secrets.TENANT_ID }}
+          APPLICATION_ID: ${{ secrets.APPLICATION_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+        run: |
           echo "${{ secrets.TENANT_ID }}"
           echo "${{ secrets.APPLICATION_ID }}"
           echo "${{ secrets.CLIENT_SECRET }}"
+          echo "${{ env.TENANT_ID }}"
+          echo "${{ env.APPLICATION_ID }}"
+          echo "${{ env.CLIENT_SECRET }}"          
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
